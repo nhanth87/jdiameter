@@ -42,10 +42,10 @@
 
 package org.jdiameter.client.impl.controller;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -80,10 +80,10 @@ public class RealmTableImpl implements IRealmTable {
   private static final Logger logger = LoggerFactory.getLogger(RealmTableImpl.class);
 
   // maps name->realms (cause there might be more than one realm defined, with different app id.
-  protected Map<String, RealmSet> realmNameToRealmSet = new HashMap<String, RealmSet>();
+  protected Map<String, RealmSet> realmNameToRealmSet = new ConcurrentHashMap<String, RealmSet>();
 
   // "cache" so we don't have to combine all realms
-  protected List<String> allRealmsSet = new ArrayList<String>();
+  protected List<String> allRealmsSet = new CopyOnWriteArrayList<String>();
 
   protected String localRealmName;
   protected String localHost;
@@ -182,7 +182,7 @@ public class RealmTableImpl implements IRealmTable {
       if (set != null) {
         Collection<Realm> present = set.values();
         allRealmsSet.remove(realmName);
-        return new ArrayList<Realm>(present);
+        return new CopyOnWriteArrayList<Realm>(present);
       }
     }
 
@@ -198,9 +198,9 @@ public class RealmTableImpl implements IRealmTable {
     RealmSet set = this.realmNameToRealmSet.get(realmName);
     if (set != null) {
       Collection<Realm> present = set.values();
-      return new ArrayList<Realm>(present);
+      return new CopyOnWriteArrayList<Realm>(present);
     }
-    return new ArrayList<Realm>(0);
+    return new CopyOnWriteArrayList<Realm>();
   }
 
   /*
@@ -209,9 +209,10 @@ public class RealmTableImpl implements IRealmTable {
    */
   @Override
   public Collection<Realm> getRealms() {
-    ArrayList<Realm> rss = new ArrayList<Realm>();
+    CopyOnWriteArrayList<Realm> rss = new CopyOnWriteArrayList<Realm>();
 
-    Set<String> keys = new HashSet<String>(this.realmNameToRealmSet.keySet());
+    Set<String> keys = ConcurrentHashMap.newKeySet();
+    keys.addAll(this.realmNameToRealmSet.keySet());
     for (String key : keys) {
       RealmSet rs = this.realmNameToRealmSet.get(key);
       rss.addAll(rs.values());
@@ -342,7 +343,7 @@ public class RealmTableImpl implements IRealmTable {
   private class RealmSet {
 
     // TODO: use two lists and iterate over index?
-    protected Map<ApplicationId, Realm> appIdToRealm = new HashMap<ApplicationId, Realm>();
+    protected Map<ApplicationId, Realm> appIdToRealm = new ConcurrentHashMap<ApplicationId, Realm>();
 
     /**
      * @param realm

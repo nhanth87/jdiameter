@@ -60,7 +60,7 @@ import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.UnknownServiceException;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -692,7 +692,9 @@ public class MutablePeerTableImpl extends PeerTableImpl implements IMutablePeerT
   }
 
   public Set<Realm> getAllRealms() {
-    return new HashSet<Realm>(router.getRealmTable().getRealms());
+    Set<Realm> realms = ConcurrentHashMap.newKeySet();
+    realms.addAll(router.getRealmTable().getRealms());
+    return realms;
   }
 
   @Override

@@ -42,7 +42,7 @@
 
 package org.jdiameter.common.impl.data;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.jdiameter.api.BaseSession;
@@ -90,8 +90,8 @@ import org.slf4j.LoggerFactory;
 public class LocalDataSource implements ISessionDatasource {
 
   //provided by impl, no way to change that, no conf! :)
-  protected HashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>> appSessionDataFactories =
-      new HashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>>();
+  protected ConcurrentHashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>> appSessionDataFactories =
+      new ConcurrentHashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>>();
 
   private ConcurrentHashMap<String, SessionEntry> sessionIdToEntry = new ConcurrentHashMap<String, LocalDataSource.SessionEntry>();
 

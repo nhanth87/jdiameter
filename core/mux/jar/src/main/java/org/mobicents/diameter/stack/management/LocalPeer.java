@@ -44,7 +44,7 @@ package org.mobicents.diameter.stack.management;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface LocalPeer extends Serializable {
 
@@ -80,7 +80,7 @@ public interface LocalPeer extends Serializable {
 
   void removeDefaultApplication(ApplicationIdJMX defaultApplication);
 
-  HashMap<String, DiameterStatistic> getStatistics();
+  ConcurrentHashMap<String, DiameterStatistic> getStatistics();
 
-  void setStatistics(HashMap<String, DiameterStatistic> statistics);
+  void setStatistics(ConcurrentHashMap<String, DiameterStatistic> statistics);
 }

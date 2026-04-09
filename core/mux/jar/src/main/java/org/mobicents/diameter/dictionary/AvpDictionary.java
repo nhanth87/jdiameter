@@ -45,7 +45,7 @@ package org.mobicents.diameter.dictionary;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
 import org.jdiameter.client.impl.DictionarySingleton;
@@ -71,9 +71,9 @@ public class AvpDictionary {
   //dont like that, this is not the same instance as in AvpUtils... ech.
   private DictionaryImpl stackDictionary;
 
-  private HashMap<AvpRepresentation, AvpRepresentation> avpMap = new HashMap<AvpRepresentation, AvpRepresentation>();
+  private ConcurrentHashMap<AvpRepresentation, AvpRepresentation> avpMap = new ConcurrentHashMap<AvpRepresentation, AvpRepresentation>();
 
-  private Map<String, AvpRepresentation> nameToCodeMap = new HashMap<String, AvpRepresentation>();
+  private Map<String, AvpRepresentation> nameToCodeMap = new ConcurrentHashMap<String, AvpRepresentation>();
 
   private AvpDictionary() {
     // Exists only to defeat instantiation.

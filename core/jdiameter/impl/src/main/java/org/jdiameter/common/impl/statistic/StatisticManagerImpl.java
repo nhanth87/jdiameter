@@ -43,7 +43,7 @@
 package org.jdiameter.common.impl.statistic;
 
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -88,7 +88,7 @@ public class StatisticManagerImpl implements IStatisticManager {
     this.pause = pause;
     this.delay = delay;
     this.enabled = enabled;
-    Set<String> enabledSet = new HashSet<String>();
+    Set<String> enabledSet = ConcurrentHashMap.<String>newKeySet();
     if (activeRecords != null && activeRecords.length() > 0) {
       for (String s : activeRecords.split(",")) {
         enabledSet.add(s);

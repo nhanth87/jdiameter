@@ -43,9 +43,9 @@
 package org.jdiameter.client.impl.app.gx;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -130,14 +130,14 @@ public class ClientGxSessionImpl extends AppGxSessionImpl implements ClientGxSes
   protected static final Set<Long> temporaryErrorCodes;
 
   static {
-    HashSet<Long> tmp = new HashSet<Long>();
+    Set<Long> tmp = ConcurrentHashMap.<Long>newKeySet();
     tmp.add(DIAMETER_UNABLE_TO_DELIVER);
     tmp.add(DIAMETER_TOO_BUSY);
     tmp.add(DIAMETER_LOOP_DETECTED);
     temporaryErrorCodes = Collections.unmodifiableSet(tmp);
   }
   // Session Based Queue
-  protected ArrayList<Event> eventQueue = new ArrayList<Event>();
+  protected CopyOnWriteArrayList<Event> eventQueue = new CopyOnWriteArrayList<Event>();
 
 
   public ClientGxSessionImpl(IClientGxSessionData sessionData, IGxMessageFactory fct, ISessionFactory sf, ClientGxSessionListener lst,

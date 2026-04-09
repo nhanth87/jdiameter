@@ -75,7 +75,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Future;
@@ -136,9 +136,9 @@ public class DiameterStackMultiplexer extends ServiceMBeanSupport implements Dia
 
   protected Stack stack = null;
 
-  protected HashMap<DiameterListener, Collection<org.jdiameter.api.ApplicationId>> listenerToAppId =
-      new HashMap<DiameterListener, Collection<org.jdiameter.api.ApplicationId>>(3);
-  protected HashMap<Long, DiameterListener> appIdToListener = new HashMap<Long, DiameterListener>(3);
+  protected ConcurrentHashMap<DiameterListener, Collection<org.jdiameter.api.ApplicationId>> listenerToAppId =
+      new ConcurrentHashMap<DiameterListener, Collection<org.jdiameter.api.ApplicationId>>(3);
+  protected ConcurrentHashMap<Long, DiameterListener> appIdToListener = new ConcurrentHashMap<Long, DiameterListener>(3);
 
   // This is for synch
   protected ReentrantLock lock = new ReentrantLock();

@@ -63,7 +63,7 @@ import static org.jdiameter.server.impl.helpers.Parameters.DuplicateTimer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jdiameter.api.Configuration;
 import org.jdiameter.api.MutableConfiguration;
@@ -101,7 +101,7 @@ public class ParametersImpl implements Parameters {
   private Long statisticLogger_Pause;
   private Long statisticLogger_Delay;
 
-  private HashMap<String, ConcurrentEntity> concurrentEntities = new HashMap<String, ConcurrentEntity>();
+  private ConcurrentHashMap<String, ConcurrentEntity> concurrentEntities = new ConcurrentHashMap<String, ConcurrentEntity>();
 
   public ParametersImpl(MutableConfiguration config) {
     // Generic Stack Configuration
@@ -272,7 +272,7 @@ public class ParametersImpl implements Parameters {
    */
 
   @Override
-  public HashMap<String, ConcurrentEntity> getConcurrentEntities() {
+  public ConcurrentHashMap<String, ConcurrentEntity> getConcurrentEntities() {
     return concurrentEntities;
   }
 

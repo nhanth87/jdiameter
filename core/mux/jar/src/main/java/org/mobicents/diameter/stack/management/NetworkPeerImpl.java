@@ -50,7 +50,7 @@ import static org.jdiameter.client.impl.helpers.Parameters.PeerTable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jdiameter.api.Configuration;
 import org.jdiameter.client.impl.helpers.EmptyConfiguration;
@@ -74,7 +74,7 @@ public class NetworkPeerImpl implements NetworkPeer {
   // Helpers
   private static final String DEFAULT_STRING = "default_string";
 
-  private HashMap<String, DiameterStatistic> statistics;
+  private ConcurrentHashMap<String, DiameterStatistic> statistics;
 
   public NetworkPeerImpl(String name, Boolean attemptConnect, Integer rating) {
     this.name = name;
@@ -225,12 +225,12 @@ public class NetworkPeerImpl implements NetworkPeer {
   }
 
   @Override
-  public HashMap<String, DiameterStatistic> getStatistics() {
+  public ConcurrentHashMap<String, DiameterStatistic> getStatistics() {
     return statistics;
   }
 
   @Override
-  public void setStatistics(HashMap<String, DiameterStatistic> statistics) {
+  public void setStatistics(ConcurrentHashMap<String, DiameterStatistic> statistics) {
     this.statistics = statistics;
   }
 }

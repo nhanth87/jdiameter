@@ -44,7 +44,7 @@ package org.jdiameter.common.impl.statistic;
 
 import static org.jdiameter.common.api.concurrent.IConcurrentFactory.ScheduledExecServices.StatisticTimer;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -83,7 +83,7 @@ public class StatisticProcessorImpl implements IStatisticProcessor {
   private Future<?> logFuture;
 
   // map of loggers, so we dont have to fetch from slf all the time
-  private HashMap<String, Logger> loggers = new HashMap<String, Logger>();
+  private ConcurrentHashMap<String, Logger> loggers = new ConcurrentHashMap<String, Logger>();
 
   public StatisticProcessorImpl(Configuration config, IConcurrentFactory concurrentFactory, final IStatisticManager statisticFactory) {
     this.statisticFactory = statisticFactory;

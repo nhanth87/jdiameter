@@ -43,7 +43,7 @@
 package org.mobicents.diameter.stack.management;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface NetworkPeer extends Serializable {
 
@@ -73,7 +73,7 @@ public interface NetworkPeer extends Serializable {
 
   void setSecurityRef(String securityRef);
 
-  HashMap<String, DiameterStatistic> getStatistics();
+  ConcurrentHashMap<String, DiameterStatistic> getStatistics();
 
-  void setStatistics(HashMap<String, DiameterStatistic> statistics);
+  void setStatistics(ConcurrentHashMap<String, DiameterStatistic> statistics);
 }

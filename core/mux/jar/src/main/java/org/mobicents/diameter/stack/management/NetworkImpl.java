@@ -42,7 +42,7 @@
 
 package org.mobicents.diameter.stack.management;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
 import org.jdiameter.api.InternalException;
@@ -65,8 +65,8 @@ public class NetworkImpl implements Network {
 
   private static final Logger logger = LoggerFactory.getLogger(NetworkImpl.class);
 
-  private Map<String, NetworkPeer> peers = new HashMap<String, NetworkPeer>();
-  private Map<String, Realm> realms = new HashMap<String, Realm>();
+  private Map<String, NetworkPeer> peers = new ConcurrentHashMap<String, NetworkPeer>();
+  private Map<String, Realm> realms = new ConcurrentHashMap<String, Realm>();
 
   public NetworkImpl() {
   }

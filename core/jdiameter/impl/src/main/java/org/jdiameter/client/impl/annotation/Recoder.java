@@ -47,7 +47,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -182,7 +182,7 @@ public class Recoder implements IRecoder {
   private Map<String, Object> getChildInstance(Object yourDomainMessageObject, ClassInfo c, Map<String, Object> chMap)
       throws RecoderException {
     if (chMap == null) {
-      chMap = new HashMap<String, Object>();
+      chMap = new ConcurrentHashMap<String, Object>();
     }
     for (MethodInfo mi : c.getMethodsInfo()) {
       if (mi.getAnnotation(Getter.class) != null) {
@@ -425,7 +425,7 @@ public class Recoder implements IRecoder {
         // Find max constructor + lost avp set by setters
         int cacount = 0;
         Constructor<?> cm = null;
-        Map<String, Class<?>> cmargs = new HashMap<String, Class<?>>();
+        Map<String, Class<?>> cmargs = new ConcurrentHashMap<String, Class<?>>();
         for (ConstructorInfo ci : c.getConstructorsInfo()) {
           if (ci.getAnnotation(Setter.class) != null) {
             // check params - all params must have avp annotation
@@ -495,7 +495,7 @@ public class Recoder implements IRecoder {
       for (MethodInfo mi : c.getMethodsInfo()) {
         Setter s = mi.getAnnotation(Setter.class);
         if (s != null && Setter.Type.UNDEFINED.equals(s.value())) {
-          Map<Integer, Integer> known = new HashMap<Integer, Integer>();
+          Map<Integer, Integer> known = new ConcurrentHashMap<Integer, Integer>();
           for (Class<?> argc : cmargs.values()) {
             AvpDscr argd = storage.getClassInfo((argc.isArray() ? argc.getComponentType() : argc)).getAnnotation(AvpDscr.class);
             known.put(argd.code(), argd.code());
@@ -601,7 +601,7 @@ public class Recoder implements IRecoder {
     int cacount = 0;
     ClassInfo c = storage.getClassInfo(m);
     Constructor<?> cm = null;
-    Map<String, Class<?>> cmargs = new HashMap<String, Class<?>>();
+    Map<String, Class<?>> cmargs = new ConcurrentHashMap<String, Class<?>>();
     for (ConstructorInfo ci : c.getConstructorsInfo()) {
       if (ci.getAnnotation(Setter.class) != null) {
         // check params - all params must have avp annotation

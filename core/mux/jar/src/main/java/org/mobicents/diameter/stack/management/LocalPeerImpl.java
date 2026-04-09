@@ -46,7 +46,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LocalPeerImpl implements LocalPeer {
 
@@ -68,7 +68,7 @@ public class LocalPeerImpl implements LocalPeer {
   // TODO: Implement
   // private OverloadMonitor overloadMonitor;
 
-  private HashMap<String, DiameterStatistic> statistics;
+  private ConcurrentHashMap<String, DiameterStatistic> statistics;
 
   public LocalPeerImpl() {
   }
@@ -190,12 +190,12 @@ public class LocalPeerImpl implements LocalPeer {
   }
 
   @Override
-  public HashMap<String, DiameterStatistic> getStatistics() {
+  public ConcurrentHashMap<String, DiameterStatistic> getStatistics() {
     return statistics;
   }
 
   @Override
-  public void setStatistics(HashMap<String, DiameterStatistic> statistics) {
+  public void setStatistics(ConcurrentHashMap<String, DiameterStatistic> statistics) {
     this.statistics = statistics;
   }
 }

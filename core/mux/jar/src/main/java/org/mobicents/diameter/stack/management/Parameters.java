@@ -43,7 +43,7 @@
 package org.mobicents.diameter.stack.management;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface Parameters extends Serializable {
 
@@ -105,7 +105,7 @@ public interface Parameters extends Serializable {
   public void setThreadPool_Size(Integer threadPoolSize);
    */
 
-  HashMap<String, ConcurrentEntity> getConcurrentEntities();
+  ConcurrentHashMap<String, ConcurrentEntity> getConcurrentEntities();
 
   void setConcurrentEntity(ConcurrentEntity concurrentEntity);
 

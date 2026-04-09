@@ -79,8 +79,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -151,7 +151,7 @@ public class PeerImpl extends AbstractPeer implements IPeer {
   protected long vendorID;
   protected String productName;
   protected int firmWare;
-  protected Set<ApplicationId> commonApplications = new HashSet<ApplicationId>();
+  protected Set<ApplicationId> commonApplications = ConcurrentHashMap.<ApplicationId>newKeySet();
   protected AtomicLong hopByHopId = new AtomicLong(uid.nextInt());
   protected int rating;
   protected boolean stopping = false;
@@ -638,7 +638,7 @@ public class PeerImpl extends AbstractPeer implements IPeer {
   protected void fillIPAddressTable(IMessage message) {
     AvpSet avps = message.getAvps().getAvps(HOST_IP_ADDRESS);
     if (avps != null) {
-      ArrayList<InetAddress> t = new ArrayList<InetAddress>();
+      CopyOnWriteArrayList<InetAddress> t = new CopyOnWriteArrayList<InetAddress>();
       for (int i = 0; i < avps.size(); i++) {
         try {
           t.add(avps.getAvpByIndex(i).getAddress());
@@ -654,7 +654,7 @@ public class PeerImpl extends AbstractPeer implements IPeer {
   protected Set<ApplicationId> getCommonApplicationIds(IMessage message) {
     //TODO: fix this, its not correct lookup. It should check realm!
     //it does not include application Ids for which listeners register - and on this  basis it consume message!
-    Set<ApplicationId> newAppId = new HashSet<ApplicationId>();
+    Set<ApplicationId> newAppId = ConcurrentHashMap.<ApplicationId>newKeySet();
     Set<ApplicationId> locAppId = metaData.getLocalPeer().getCommonApplications();
     List<ApplicationId> remAppId = message.getApplicationIdAvps();
     logger.debug("Checking common applications. Remote applications: {}. Local applications: {}", remAppId, locAppId);

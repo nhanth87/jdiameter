@@ -42,7 +42,7 @@
 
 package org.jdiameter.common.impl.validation;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -74,7 +74,7 @@ public class MessageRepresentationImpl implements MessageRepresentation {
   private long applicationId = 0;
 
   private boolean isRequest = false;
-  protected Map<AvpRepresentation, AvpRepresentation> unmuttableMessageAvps = new HashMap<AvpRepresentation, AvpRepresentation>();
+  protected Map<AvpRepresentation, AvpRepresentation> unmuttableMessageAvps = new ConcurrentHashMap<AvpRepresentation, AvpRepresentation>();
   private String name = null;
 
   public MessageRepresentationImpl(int commandCode, long applicationId, boolean isRequest) {
@@ -264,9 +264,9 @@ public class MessageRepresentationImpl implements MessageRepresentation {
     clone.commandCode = this.commandCode;
     clone.isRequest = this.isRequest;
     clone.name = this.name;
-    // clone.messageAvps = new HashMap<AvpRepresentation,
+    // clone.messageAvps = new ConcurrentHashMap<AvpRepresentation,
     // AvpRepresentation>();
-    Map<AvpRepresentation, AvpRepresentation> map = new HashMap<AvpRepresentation, AvpRepresentation>();
+    Map<AvpRepresentation, AvpRepresentation> map = new ConcurrentHashMap<AvpRepresentation, AvpRepresentation>();
     for (Entry<AvpRepresentation, AvpRepresentation> entry : this.unmuttableMessageAvps.entrySet()) {
       map.put((AvpRepresentation) entry.getKey().clone(), (AvpRepresentation) entry.getValue().clone());
     }

@@ -51,7 +51,7 @@ import static org.jdiameter.client.impl.helpers.Parameters.StopTimeOut;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.UnknownServiceException;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -171,7 +171,7 @@ public class PeerTableImpl implements IPeerTable {
 
   @Override
   public List<Peer> getPeerTable() {
-    return new ArrayList<Peer>(peerTable.values());
+    return new CopyOnWriteArrayList<Peer>(peerTable.values());
   }
 
   @Override

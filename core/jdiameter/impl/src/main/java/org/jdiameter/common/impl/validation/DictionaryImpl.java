@@ -49,7 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -95,14 +95,14 @@ public class DictionaryImpl implements Dictionary {
   public static final String _AVP_ATTRIBUTE_MULTIPLICITY = "multiplicity";
   public static final String _AVP_ATTRIBUTE_INDEX = "index";
 
-  private Map<AvpRepresentation, AvpRepresentation> avpMap = new HashMap<AvpRepresentation, AvpRepresentation>();
-  private Map<String, AvpRepresentation> avpByNameMap = new HashMap<String, AvpRepresentation>();
+  private Map<AvpRepresentation, AvpRepresentation> avpMap = new ConcurrentHashMap<AvpRepresentation, AvpRepresentation>();
+  private Map<String, AvpRepresentation> avpByNameMap = new ConcurrentHashMap<String, AvpRepresentation>();
 
-  private Map<String, String> vendorMap = new HashMap<String, String>();
+  private Map<String, String> vendorMap = new ConcurrentHashMap<String, String>();
 
-  private Map<MessageRepresentation, MessageRepresentation> commandMap = new HashMap<MessageRepresentation, MessageRepresentation>();
+  private Map<MessageRepresentation, MessageRepresentation> commandMap = new ConcurrentHashMap<MessageRepresentation, MessageRepresentation>();
 
-  private Map<String, String> typedefMap = new HashMap<String, String>();
+  private Map<String, String> typedefMap = new ConcurrentHashMap<String, String>();
 
   private boolean configured = false;
 
@@ -220,10 +220,10 @@ public class DictionaryImpl implements Dictionary {
         }
       });
 
-      this.vendorMap = new HashMap<String, String>();
-      this.typedefMap = new HashMap<String, String>();
-      this.avpMap = new HashMap<AvpRepresentation, AvpRepresentation>();
-      this.commandMap = new HashMap<MessageRepresentation, MessageRepresentation>();
+      this.vendorMap = new ConcurrentHashMap<String, String>();
+      this.typedefMap = new ConcurrentHashMap<String, String>();
+      this.avpMap = new ConcurrentHashMap<AvpRepresentation, AvpRepresentation>();
+      this.commandMap = new ConcurrentHashMap<MessageRepresentation, MessageRepresentation>();
 
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       dbf.setValidating(false);
@@ -570,7 +570,7 @@ public class DictionaryImpl implements Dictionary {
     NodeList applicationNodes = doc.getElementsByTagName("application");
 
     // Map<MessageRepresentation, MessageRepresentation> commandMap = new
-    // HashMap<MessageRepresentation, MessageRepresentation>();
+    // ConcurrentHashMap<MessageRepresentation, MessageRepresentation>();
     for (int applicationIndex = 0; applicationIndex < applicationNodes.getLength(); applicationIndex++) {
       if (applicationNodes.item(applicationIndex).getNodeType() == Node.ELEMENT_NODE) {
         Element applicationElement = (Element) applicationNodes.item(applicationIndex);
@@ -601,7 +601,7 @@ public class DictionaryImpl implements Dictionary {
             MessageRepresentationImpl msg = new MessageRepresentationImpl(Integer.valueOf(commandCode), applicationCode,
                 Boolean.parseBoolean(isRequest), commandName);
 
-            Map<AvpRepresentation, AvpRepresentation> commandAvpList = new HashMap<AvpRepresentation, AvpRepresentation>();
+            Map<AvpRepresentation, AvpRepresentation> commandAvpList = new ConcurrentHashMap<AvpRepresentation, AvpRepresentation>();
 
             commandMap.put(msg, msg);
 

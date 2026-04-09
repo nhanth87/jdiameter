@@ -42,7 +42,7 @@
 
 package org.mobicents.diameter.impl.ha.data;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.transaction.TransactionManager;
 
@@ -108,8 +108,8 @@ public class ReplicatedSessionDatasource implements ISessionDatasource, DataRemo
   private boolean localMode;
 
   // provided by impl, no way to change that, no conf! :)
-  protected HashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>> appSessionDataFactories =
-      new HashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>>();
+  protected ConcurrentHashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>> appSessionDataFactories =
+      new ConcurrentHashMap<Class<? extends IAppSessionData>, IAppSessionDataFactory<? extends IAppSessionData>>();
 
   // Constants
   // ----------------------------------------------------------------

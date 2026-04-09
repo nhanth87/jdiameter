@@ -43,9 +43,9 @@
 package org.jdiameter.client.impl.app.cca;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -101,7 +101,7 @@ public class ClientCCASessionImpl extends AppCCASessionImpl implements ClientCCA
 
   protected Lock sendAndStateLock = new ReentrantLock();
   // Session Based Queue
-  protected ArrayList<Event> eventQueue = new ArrayList<Event>(); //FIXME: this is not replicable?
+  protected CopyOnWriteArrayList<Event> eventQueue = new CopyOnWriteArrayList<Event>(); //FIXME: this is not replicable?
   // Factories and Listeners --------------------------------------------------
   protected ICCAMessageFactory factory;
   protected ClientCCASessionListener listener;
@@ -140,7 +140,7 @@ public class ClientCCASessionImpl extends AppCCASessionImpl implements ClientCCA
   protected static final Set<Long> temporaryErrorCodes;
 
   static {
-    HashSet<Long> tmp = new HashSet<Long>();
+    Set<Long> tmp = ConcurrentHashMap.<Long>newKeySet();
     tmp.add(DIAMETER_UNABLE_TO_DELIVER);
     tmp.add(DIAMETER_TOO_BUSY);
     tmp.add(DIAMETER_LOOP_DETECTED);

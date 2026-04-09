@@ -51,7 +51,7 @@ import static org.jdiameter.server.impl.helpers.Parameters.OverloadEntryhighThre
 import static org.jdiameter.server.impl.helpers.Parameters.OverloadEntrylowThreshold;
 import static org.jdiameter.server.impl.helpers.Parameters.OverloadMonitor;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.Lock;
@@ -175,7 +175,7 @@ public class OverloadManagerImpl implements IOverloadManager {
 
   public static class AppOverloadInfo {
     private ApplicationId appId;
-    private ArrayList <AppOverloadInfoEntry> entries = new ArrayList<AppOverloadInfoEntry>();
+    private CopyOnWriteArrayList<AppOverloadInfoEntry> entries = new CopyOnWriteArrayList<AppOverloadInfoEntry>();
     private final Object lock = new Object();
 
     public ApplicationId getAppId() {

@@ -54,7 +54,7 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jdiameter.api.Configuration;
 import org.jdiameter.api.InternalException;
@@ -122,7 +122,7 @@ public class DiameterConfiguration implements Serializable {
         localPeer.addDefaultApplication(ApplicationIdJMX.createAcctApplicationId(appId.getVendorId(), appId.getAcctAppId()));
       }
     }
-    HashMap<String, DiameterStatistic> lpStats = new HashMap<String, DiameterStatistic>();
+    ConcurrentHashMap<String, DiameterStatistic> lpStats = new ConcurrentHashMap<String, DiameterStatistic>();
     for (StatisticRecord stat : ((IPeer) sLocalPeer).getStatistic().getRecords()) {
       lpStats.put(stat.getName(), new DiameterStatistic(stat.getName(), stat.getDescription(), stat.toString()));
     }
@@ -160,7 +160,7 @@ public class DiameterConfiguration implements Serializable {
       for (Peer peer : peerTable.getPeerTable()) {
         PeerImpl p = (PeerImpl) peer;
         NetworkPeerImpl nPeer = new NetworkPeerImpl(p.getUri().toString(), p.isAttemptConnection(), p.getRating(), null, null, null, null);
-        HashMap<String, DiameterStatistic> npStats = new HashMap<String, DiameterStatistic>();
+        ConcurrentHashMap<String, DiameterStatistic> npStats = new ConcurrentHashMap<String, DiameterStatistic>();
         for (StatisticRecord stat : p.getStatistic().getRecords()) {
           npStats.put(stat.getName(), new DiameterStatistic(stat.getName(), stat.getDescription(), stat.toString()));
         }
