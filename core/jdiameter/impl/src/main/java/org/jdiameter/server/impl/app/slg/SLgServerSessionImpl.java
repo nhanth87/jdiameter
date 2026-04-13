@@ -34,6 +34,7 @@ import org.jdiameter.api.app.StateChangeListener;
 import org.jdiameter.api.app.StateEvent;
 import org.jdiameter.api.slg.ServerSLgSession;
 import org.jdiameter.api.slg.ServerSLgSessionListener;
+import org.jdiameter.api.slg.events.LocationAnswer;
 import org.jdiameter.api.slg.events.LocationReportAnswer;
 import org.jdiameter.api.slg.events.LocationReportRequest;
 import org.jdiameter.api.slg.events.ProvideLocationAnswer;
@@ -87,6 +88,11 @@ public class SLgServerSessionImpl extends SLgSession
   public void sendLocationReportRequest(LocationReportRequest request)
       throws InternalException, IllegalDiameterStateException, RouteException, OverloadException {
     send(Event.Type.SEND_MESSAGE, request, null);
+  }
+
+  public void sendLocationAnswer(LocationAnswer answer)
+      throws InternalException, IllegalDiameterStateException, RouteException, OverloadException {
+    send(Event.Type.SEND_MESSAGE, null, answer);
   }
 
   @SuppressWarnings("unchecked")
