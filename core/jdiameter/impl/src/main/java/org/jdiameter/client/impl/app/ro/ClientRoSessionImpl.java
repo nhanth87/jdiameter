@@ -44,7 +44,7 @@ package org.jdiameter.client.impl.app.ro;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
@@ -150,7 +150,7 @@ public class ClientRoSessionImpl extends AppRoSessionImpl implements ClientRoSes
   }
 
   // Session Based Queue
-  protected CopyOnWriteArrayList<Event> eventQueue = new CopyOnWriteArrayList<Event>();
+  protected MpscArrayQueue<Event> eventQueue = new MpscArrayQueue<>(256);
 
   public ClientRoSessionImpl(IClientRoSessionData sessionData, IRoMessageFactory fct, ISessionFactory sf, ClientRoSessionListener lst,
       IClientRoSessionContext ctx, StateChangeListener<AppSession> stLst) {
@@ -1391,3 +1391,4 @@ public class ClientRoSessionImpl extends AppRoSessionImpl implements ClientRoSes
   }
 
 }
+

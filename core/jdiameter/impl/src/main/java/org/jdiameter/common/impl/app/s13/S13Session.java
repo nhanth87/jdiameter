@@ -21,7 +21,7 @@ package org.jdiameter.common.impl.app.s13;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.collections.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -39,7 +39,7 @@ public abstract class S13Session extends AppSessionImpl implements NetworkReqLis
 
   protected Lock sendAndStateLock = new ReentrantLock();
 
-  protected transient List<StateChangeListener> stateListeners = new CopyOnWriteArrayList<StateChangeListener>();
+  protected transient List<StateChangeListener> stateListeners = new MpscArrayQueue<>(64);
   protected transient IS13MessageFactory messageFactory;
 
   protected static final String TIMER_NAME_MSG_TIMEOUT = "MSG_TIMEOUT";

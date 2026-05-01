@@ -43,7 +43,7 @@
 package org.jdiameter.client.impl.app.cca;
 
 import java.io.Serializable;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
@@ -101,7 +101,7 @@ public class ClientCCASessionImpl extends AppCCASessionImpl implements ClientCCA
 
   protected Lock sendAndStateLock = new ReentrantLock();
   // Session Based Queue
-  protected CopyOnWriteArrayList<Event> eventQueue = new CopyOnWriteArrayList<Event>(); //FIXME: this is not replicable?
+  protected MpscArrayQueue<Event> eventQueue = new MpscArrayQueue<>(256); //FIXME: this is not replicable?
   // Factories and Listeners --------------------------------------------------
   protected ICCAMessageFactory factory;
   protected ClientCCASessionListener listener;
@@ -1381,3 +1381,4 @@ public class ClientCCASessionImpl extends AppCCASessionImpl implements ClientCCA
   }
 
 }
+

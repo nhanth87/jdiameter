@@ -49,7 +49,7 @@ import java.security.PrivilegedAction;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 
 /**
  * <P>The basic service for managing a set of Diameter stacks.<br>
@@ -82,7 +82,7 @@ public final class StackManager {
 
   private static final Object logSync = new Object();
 
-  private static List<StackInfo> stacks = new CopyOnWriteArrayList<StackInfo>();
+  private static List<StackInfo> stacks = new MpscArrayQueue<>(16);
   private static PrintWriter logWriter = null;
   private static boolean initialized = false;
 
@@ -337,5 +337,6 @@ class StackInfo {
         append(stack).append("]").toString());
   }
 }
+
 
 

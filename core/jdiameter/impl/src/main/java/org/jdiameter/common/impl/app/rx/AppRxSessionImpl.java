@@ -43,7 +43,7 @@
 package org.jdiameter.common.impl.app.rx;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.collections.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 

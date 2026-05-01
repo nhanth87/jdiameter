@@ -44,7 +44,7 @@ package org.jdiameter.common.impl.app;
 
 import static org.jdiameter.client.impl.helpers.Parameters.SessionTimeOut;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.collections.MpscArrayQueue;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -101,7 +101,7 @@ public abstract class AppSessionImpl implements AppSession {
       this.maxIdleTime = this.sf.getContainer().getConfiguration().getLongValue(SessionTimeOut.ordinal(), (Long) SessionTimeOut.defValue());
       this.session = this.sf.getNewSession(this.appSessionData.getSessionId());
       //annoying ;[
-      CopyOnWriteArrayList<Session> list = new CopyOnWriteArrayList<Session>();
+      CopyOnWriteArrayList<Session> list = new MpscArrayQueue<>(256);
       list.add(this.session);
       this.sessions = Collections.unmodifiableList(list);
     }

@@ -43,7 +43,7 @@
 package org.jdiameter.client.impl.app.gx;
 
 import java.io.Serializable;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
@@ -137,7 +137,7 @@ public class ClientGxSessionImpl extends AppGxSessionImpl implements ClientGxSes
     temporaryErrorCodes = Collections.unmodifiableSet(tmp);
   }
   // Session Based Queue
-  protected CopyOnWriteArrayList<Event> eventQueue = new CopyOnWriteArrayList<Event>();
+  protected MpscArrayQueue<Event> eventQueue = new MpscArrayQueue<>(256);
 
 
   public ClientGxSessionImpl(IClientGxSessionData sessionData, IGxMessageFactory fct, ISessionFactory sf, ClientGxSessionListener lst,
@@ -1329,3 +1329,4 @@ public class ClientGxSessionImpl extends AppGxSessionImpl implements ClientGxSes
   }
 
 }
+

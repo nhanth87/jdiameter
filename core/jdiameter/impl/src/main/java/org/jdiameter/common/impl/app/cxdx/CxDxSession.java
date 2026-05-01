@@ -44,7 +44,7 @@ package org.jdiameter.common.impl.app.cxdx;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -67,7 +67,7 @@ public abstract class CxDxSession extends AppSessionImpl implements NetworkReqLi
 
   protected Lock sendAndStateLock = new ReentrantLock();
 
-  protected transient List<StateChangeListener> stateListeners = new CopyOnWriteArrayList<StateChangeListener>();
+  protected transient List<StateChangeListener> stateListeners = new MpscArrayQueue<>(64);
   protected transient ICxDxMessageFactory messageFactory;
 
   //protected CxDxSessionState state = CxDxSessionState.IDLE;
@@ -179,3 +179,4 @@ public abstract class CxDxSession extends AppSessionImpl implements NetworkReqLi
 
 
 }
+

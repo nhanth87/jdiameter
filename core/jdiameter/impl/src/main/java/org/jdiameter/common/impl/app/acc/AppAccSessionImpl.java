@@ -43,7 +43,7 @@
 package org.jdiameter.common.impl.app.acc;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -66,7 +66,7 @@ public abstract class AppAccSessionImpl extends AppSessionImpl implements  Netwo
 
   protected Lock sendAndStateLock = new ReentrantLock();
 
-  protected transient List<StateChangeListener> stateListeners = new CopyOnWriteArrayList<StateChangeListener>();
+  protected transient List<StateChangeListener> stateListeners = new MpscArrayQueue<>(64);
 
   public AppAccSessionImpl(ISessionFactory sf, IAppSessionData appSessionData) {
     super(sf, appSessionData);

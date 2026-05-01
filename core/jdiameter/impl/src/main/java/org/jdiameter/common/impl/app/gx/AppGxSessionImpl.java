@@ -43,7 +43,7 @@
 package org.jdiameter.common.impl.app.gx;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -62,7 +62,7 @@ public abstract class AppGxSessionImpl extends AppSessionImpl implements Network
   protected Lock sendAndStateLock = new ReentrantLock();
   //FIXME: those must be recreated from local resources!
   //FIXME: change this to single ref!
-  protected transient List<StateChangeListener> stateListeners = new CopyOnWriteArrayList<StateChangeListener>();
+  protected transient List<StateChangeListener> stateListeners = new MpscArrayQueue<>(64);
 
   public AppGxSessionImpl(ISessionFactory sf, IGxSessionData sessionData) {
     super(sf, sessionData);
@@ -86,3 +86,4 @@ public abstract class AppGxSessionImpl extends AppSessionImpl implements Network
     super.release();
   }
 }
+

@@ -43,7 +43,7 @@
 package org.jdiameter.common.impl.app.cca;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -66,7 +66,7 @@ public abstract class AppCCASessionImpl extends AppSessionImpl implements CCASes
   //FIXME: those must be recreated from local resources!
   //FIXME: change this to single ref!
   //FIXME: use FastList ?
-  protected List<StateChangeListener> stateListeners = new CopyOnWriteArrayList<StateChangeListener>();
+  protected List<StateChangeListener> stateListeners = new MpscArrayQueue<>(64);
 
   public AppCCASessionImpl(ISessionFactory sf, IAppSessionData data)  {
     super(sf, data);

@@ -43,7 +43,7 @@
 package org.jdiameter.client.impl.app.rx;
 
 import java.nio.ByteBuffer;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.queues.MpscArrayQueue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
@@ -153,7 +153,7 @@ public class ClientRxSessionImpl extends AppRxSessionImpl implements ClientRxSes
     temporaryErrorCodes = Collections.unmodifiableSet(tmp);
   }
   // Session Based Queue
-  protected CopyOnWriteArrayList<Event> eventQueue = new CopyOnWriteArrayList<Event>();
+  protected MpscArrayQueue<Event> eventQueue = new MpscArrayQueue<>(256);
 
   public ClientRxSessionImpl(IClientRxSessionData sessionData, IRxMessageFactory fct, ISessionFactory sf, ClientRxSessionListener lst,
       IClientRxSessionContext ctx, StateChangeListener<AppSession> stLst) {

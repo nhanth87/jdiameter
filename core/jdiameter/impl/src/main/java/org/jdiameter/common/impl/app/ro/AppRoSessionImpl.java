@@ -43,7 +43,7 @@
 package org.jdiameter.common.impl.app.ro;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.collections.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -65,7 +65,7 @@ public abstract class AppRoSessionImpl extends AppSessionImpl implements Network
 
   //FIXME: those must be recreated from local resources!
   //FIXME: change this to single ref!
-  protected transient List<StateChangeListener> stateListeners = new CopyOnWriteArrayList<StateChangeListener>();
+  protected transient List<StateChangeListener> stateListeners = new MpscArrayQueue<>(64);
 
   public AppRoSessionImpl(ISessionFactory sf, IRoSessionData sessionData)  {
     super(sf, sessionData);

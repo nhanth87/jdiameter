@@ -43,7 +43,7 @@
 package org.jdiameter.common.impl.app.sh;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.collections.MpscArrayQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -63,7 +63,7 @@ public abstract class ShSession extends AppSessionImpl implements NetworkReqList
 
   protected Lock sendAndStateLock = new ReentrantLock();
 
-  protected transient List<StateChangeListener> stateListeners = new CopyOnWriteArrayList<StateChangeListener>();
+  protected transient List<StateChangeListener> stateListeners = new MpscArrayQueue<>(64);
 
   public ShSession(ISessionFactory sf, IShSessionData data) {
     super(sf, data);

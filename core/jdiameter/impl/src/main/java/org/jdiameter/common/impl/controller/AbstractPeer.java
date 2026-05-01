@@ -42,7 +42,7 @@
 
 package org.jdiameter.common.impl.controller;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.jctools.collections.MpscArrayQueue;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -72,7 +72,7 @@ public class AbstractPeer implements Comparable<Peer> {
 
   // Statistic
   protected IStatistic statistic;
-  protected List<IStatisticRecord> perSecondRecords = new CopyOnWriteArrayList<IStatisticRecord>();
+  protected List<IStatisticRecord> perSecondRecords = new MpscArrayQueue<>(32);
   protected URI uri;
   protected IStatisticManager statisticFactory;
 
